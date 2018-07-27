@@ -21,17 +21,18 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleInputs() {
 
+        //column attack pattern bound to Left Ctrl
+        //in the future this will be dependent on the active card a player has and not bound to a keyboard key
         if (Input.GetKeyDown(KeyCode.LeftControl)) {
-            //Debug.Log("Finding space player is on with inputs: " + transform.position.x + ", " + transform.position.z);
-            //tileManager.GetTileAtCoords((int)transform.position.x, (int)transform.position.z).GetComponent<Tile>().ListCoords();
             ArrayList tilesToHit = GetTilesInColumn();
-
             StartCoroutine(AttackInGrouping(tilesToHit));
         }
 
+        //column attack pattern bound to Space
+        //hits a row X spaces away from player where X = numOfRowsToLob
+        //in the future this will be dependent on the active card a player has and not bound to a keyboard key
         if (Input.GetKeyDown(KeyCode.Space)) {
             ArrayList tilesToHit = GetTilesInRow(numOfRowsToLob); //GetTilesInColumn();
-
             StartCoroutine(AttackInGrouping(tilesToHit));
         }
     }
@@ -56,12 +57,16 @@ public class PlayerController : MonoBehaviour {
         return tilesToHit;
     }
 
+    //changes the colors of the tiles passed in for .5 seconds to signify a player's attack
+    //then changes back to white
     IEnumerator AttackInGrouping(ArrayList tilesToHit) {
         ChangeTileColors(tilesToHit, "attack");
         yield return new WaitForSeconds(.5f);
         ChangeTileColors(tilesToHit, "");
     }
 
+    //changes colors of tiles in array based on whether the "attack" parameter is passed in or not
+    //TODO: find a non-String way to do this
     private void ChangeTileColors(ArrayList tilesToHit, String type) {
         Color color;
         if (type.Equals("attack")) {

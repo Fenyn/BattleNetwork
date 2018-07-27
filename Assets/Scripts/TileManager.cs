@@ -17,6 +17,7 @@ public class TileManager : MonoBehaviour {
         InitializeBoard();
 	}
 
+    //makes a new Tile gameobject for each spot in the 2D array
     private void InitializeBoard() {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
@@ -30,6 +31,7 @@ public class TileManager : MonoBehaviour {
         }
     }
 
+    //sets each Tile to know whether it has neighbors on any given side
     private void SetTileNeighbors(GameObject tile) {
         Tile tile_script = tile.GetComponent<Tile>();
         int currentX = tile_script.xCoord;
