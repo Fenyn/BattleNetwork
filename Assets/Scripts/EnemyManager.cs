@@ -43,6 +43,7 @@ public class EnemyManager : MonoBehaviour {
 
     private int GetRandomY() {
         return UnityEngine.Random.Range(minEnemyHeight, maxEnemyHeight+1);
+
     }
 
     // Update is called once per frame
