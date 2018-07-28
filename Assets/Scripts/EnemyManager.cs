@@ -7,17 +7,20 @@ public class EnemyManager : MonoBehaviour {
 
     public int numberOfEnemiesToSpawn = 1;
     public GameObject enemy_prefab;
+    TileManager tileManager;
     int minEnemyWidth = 3;
     int maxEnemyWidth = 5;
     int minEnemyHeight = 0;
     int maxEnemyHeight = 2;
 
+
     GameObject[,] enemies;
 
     // Use this for initialization
     void Start () {
+        tileManager = GameObject.Find("Tile Manager").GetComponent<TileManager>();
         GenerateEnemies();
-	}
+    }
 
     //get a random x,y pair, then try to spawn an enemy there
     //if an enemy already exists, spawn new x,y pair and try again
@@ -30,6 +33,7 @@ public class EnemyManager : MonoBehaviour {
             int y = GetRandomY();
             if(enemies[x,y] == null) {
                 enemies[x, y] = Instantiate(enemy_prefab, new Vector3(x, .3f, y), Quaternion.identity);
+                tileManager.PutOccupantAtCoords(enemies[x, y].gameObject, x, y);
                 enemiesSpawned++;
             }
         }

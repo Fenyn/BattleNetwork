@@ -61,8 +61,20 @@ public class PlayerController : MonoBehaviour {
     //then changes back to white
     IEnumerator AttackInGrouping(ArrayList tilesToHit) {
         ChangeTileColors(tilesToHit, "attack");
+        DamageOccupants(tilesToHit);
         yield return new WaitForSeconds(.5f);
         ChangeTileColors(tilesToHit, "");
+    }
+
+    private void DamageOccupants(ArrayList tilesToHit) {
+        foreach (GameObject tile in tilesToHit) {
+            if(tile != null) {
+                GameObject tile_occupant = tile.GetComponent<Tile>().CurrentOccupant;
+                if (tile_occupant != null) {
+                    tile_occupant.GetComponent<Enemy>().DealDamage(50);
+                }
+            }
+        }
     }
 
     //changes colors of tiles in array based on whether the "attack" parameter is passed in or not

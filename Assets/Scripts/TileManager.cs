@@ -11,10 +11,13 @@ public class TileManager : MonoBehaviour {
     public GameObject tile_prefab;
     GameObject[,] tileArray;
 
-	// Use this for initialization
-	void Start () {
-        tileArray = new GameObject[width, height];
+    private void Awake() {
+        tileArray = new GameObject[width, height];        
         InitializeBoard();
+    }
+
+    // Use this for initialization
+    void Start () {
 	}
 
     //makes a new Tile gameobject for each spot in the 2D array
@@ -77,6 +80,45 @@ public class TileManager : MonoBehaviour {
         }
         else {
             return null;
+        }
+    }
+
+    //sets the Current Occupant of Tile at coords x,y to be the passed in GameObject
+    public bool PutOccupantAtCoords(GameObject occupant, int x, int y) {
+        if(occupant == null) {
+            Debug.LogError("Null Occupant attempted to be placed. Please use RemoveOccupantAtCoords instead");
+        }
+
+        //check for valid coords and non-null occupant and then do operation
+        if (occupant != null && (x >= 0 && x < width) && (y >= 0 && y < height)) {
+            tileArray[x, y].GetComponent<Tile>().CurrentOccupant = occupant;
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    //get Current Occupant of Tile at coords x,y
+    public GameObject GetOccupantAtCoords(int x, int y) {
+        //check for valid coords and then do operation
+        if ((x >= 0 && x < width) && (y >= 0 && y < height)) {
+            return tileArray[x, y].GetComponent<Tile>().CurrentOccupant;
+        }
+        else {
+            return null;
+        }
+    }
+
+    public bool RemoveOccupantAtCoords(int x, int y) {
+        //check for valid coords and then do operation
+        if ((x >= 0 && x < width) && (y >= 0 && y < height)) {
+            tileArray[x, y].GetComponent<Tile>().CurrentOccupant = null;
+            Debug.Log("occupant at " + x + ", " + y + " has been removed");
+            return true;
+        }
+        else {
+            return false;
         }
     }
 }

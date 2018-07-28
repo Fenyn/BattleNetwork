@@ -14,6 +14,14 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if(CurrentHealth <= 0) {
+            Destroy(gameObject);
+        }
 	}
+
+    public void DealDamage(int damage) {
+        Debug.Log("Dealing damage to " + name + ". Starting health: " + CurrentHealth);
+        CurrentHealth -= damage;
+        Debug.Log("New health: " + CurrentHealth);
+    }
 }

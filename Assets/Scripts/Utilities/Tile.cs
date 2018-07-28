@@ -13,8 +13,11 @@ public class Tile : MonoBehaviour {
     public int xCoord { get; set; }
     public int yCoord { get; set; }
 
-    public GameObject CurrentOccupant { get; protected set; }
+    public GameObject CurrentOccupant;
 
+    private void Awake() {
+        CurrentOccupant = null;        
+    }
 
     // Use this for initialization
     void Start () {
