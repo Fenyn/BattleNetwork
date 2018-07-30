@@ -7,6 +7,7 @@ public class AttackCoroutines : MonoBehaviour {
 
     TileManager tileManager;
     PlayerController player;
+    int damage;
 
     private void Awake() {
         tileManager = GameObject.Find("Tile Manager").GetComponent<TileManager>();
@@ -15,18 +16,31 @@ public class AttackCoroutines : MonoBehaviour {
 
 
     //start a new attack routine with shockwave pattern
-    public void Shockwave() {
+    public void Shockwave(int dmg) {
+        damage = dmg;
         StartCoroutine(Attack_Shockwave());
     }
 
     //start a new attack routine with column pattern
-    public void Column() {
+    public void Column(int dmg) {
+        damage = dmg;
         StartCoroutine(Attack_Column());
     }
 
     //start a new attack routine with row pattern
-    public void Row(int numOfRowsToLob) {
+    public void Row(int numOfRowsToLob, int dmg) {
+        damage = dmg;
         StartCoroutine(Attack_Row(numOfRowsToLob));
+    }
+
+    public void Sword(int dmg) {
+        damage = dmg;
+        StartCoroutine(Attack_Sword());
+    }
+
+    public void Grenade(int numOfRowsToLob ,int dmg) {
+        damage = dmg;
+        StartCoroutine(Attack_Grenade(numOfRowsToLob));
     }
 
     IEnumerator Attack_Shockwave() {
@@ -49,6 +63,28 @@ public class AttackCoroutines : MonoBehaviour {
         StartCoroutine(AttackInGrouping(tilesToHit));
         yield return "hit";
 
+    }
+
+    IEnumerator Attack_Sword() {
+        ArrayList tilesToHit = new ArrayList();
+        tilesToHit.Add(tileManager.GetTileAtCoords(player.CurrentX + 1, player.CurrentZ));
+        StartCoroutine(AttackInGrouping(tilesToHit));
+        yield return "hit";
+    }
+
+    IEnumerator Attack_Grenade(int numSpaceFromPlayerToCenter) {
+        ArrayList tilesToHit = new ArrayList();
+        int currentPlayerX = player.CurrentX;
+        int currentPlayerZ = player.CurrentZ;
+
+        tilesToHit.Add(tileManager.GetTileAtCoords(currentPlayerX + numSpaceFromPlayerToCenter, currentPlayerZ - 1));
+        tilesToHit.Add(tileManager.GetTileAtCoords(currentPlayerX + numSpaceFromPlayerToCenter, currentPlayerZ));
+        tilesToHit.Add(tileManager.GetTileAtCoords(currentPlayerX + numSpaceFromPlayerToCenter, currentPlayerZ + 1));
+        tilesToHit.Add(tileManager.GetTileAtCoords(currentPlayerX + numSpaceFromPlayerToCenter -1, currentPlayerZ));
+        tilesToHit.Add(tileManager.GetTileAtCoords(currentPlayerX + numSpaceFromPlayerToCenter + 1, currentPlayerZ));
+
+        StartCoroutine(AttackInGrouping(tilesToHit));
+        yield return "hit";
     }
 
     //changes the colors of the tiles passed in for .5 seconds (or passed in duration)
@@ -85,7 +121,7 @@ public class AttackCoroutines : MonoBehaviour {
             if (tile != null) {
                 GameObject tile_occupant = tile.GetComponent<Tile>().CurrentOccupant;
                 if (tile_occupant != null) {
-                    tile_occupant.GetComponent<Enemy>().DealDamage(50);
+                    tile_occupant.GetComponent<Enemy>().DealDamage(damage);
                 }
             }
         }

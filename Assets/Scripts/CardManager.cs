@@ -8,6 +8,7 @@ public class CardManager : MonoBehaviour {
     Card activeCard;
     int currentCardIndex = 0;
     AttackCoroutines attack;
+    UIManager uiManager;
 
 
     private static GameObject managerObj;
@@ -20,23 +21,27 @@ public class CardManager : MonoBehaviour {
         }
     }
 
-
+    private void Awake() {
+        cards = new Card[5];
+        cards[0] = MakeNewAttackCard(AttackCard.AttackPattern.Column, 50);
+        cards[1] = MakeNewAttackCard(AttackCard.AttackPattern.Row, 50);
+        cards[2] = MakeNewAttackCard(AttackCard.AttackPattern.Shockwave, 35);
+        cards[3] = MakeNewAttackCard(AttackCard.AttackPattern.Sword, 100);
+        cards[4] = MakeNewAttackCard(AttackCard.AttackPattern.Grenade, 100);
+        activeCard = cards[currentCardIndex];
+    }
 
     // Use this for initialization
     void Start () {
-        attack = gameObject.AddComponent<AttackCoroutines>();
-        cards = new Card[3];
-        cards[0] = MakeNewAttackCard(AttackCard.AttackPattern.Column);
-        cards[1] = MakeNewAttackCard(AttackCard.AttackPattern.Row);
-        cards[2] = MakeNewAttackCard(AttackCard.AttackPattern.Shockwave);
-        activeCard = cards[currentCardIndex];
+        uiManager = GameObject.Find("UI Manager").GetComponent<UIManager>();
     }
 
     //factory pattern is used here because Unity hates doing an = new AttackPattern(Row) sort of thing
     //so we instead add the card to a gameobject and return the object
-    public static Card MakeNewAttackCard(AttackCard.AttackPattern attackPattern) {
+    public static Card MakeNewAttackCard(AttackCard.AttackPattern attackPattern, int damageValue) {
         var thisObj = ManagerObj.AddComponent<AttackCard>();
         thisObj.CardAttackType = attackPattern;
+        thisObj.damage = damageValue;
 
         return thisObj;
     }
@@ -52,6 +57,7 @@ public class CardManager : MonoBehaviour {
             currentCardIndex = 0;
         }
         activeCard = cards[currentCardIndex];
+        uiManager.UpdateCurrentCard();
         Debug.Log("Cards cycled clockwise. new index: " + currentCardIndex);
     }
 
@@ -61,6 +67,12 @@ public class CardManager : MonoBehaviour {
             currentCardIndex += cards.Length;
         }
         activeCard = cards[currentCardIndex];
+        uiManager.UpdateCurrentCard();
+
         Debug.Log("Cards cycled counter clockwise. new index: " + currentCardIndex);
+    }
+
+    public string GetCurrentCardNameAsString() {
+        return cards[currentCardIndex].GetCardTypeAsString();
     }
 }

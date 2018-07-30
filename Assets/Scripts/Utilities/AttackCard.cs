@@ -5,12 +5,12 @@ using UnityEngine;
 public class AttackCard : Card {
 
     public enum AttackPattern { Row, Column, Shockwave, Grenade, Sword, Boomerang, XSlash, PBAoE}
-
-    public int damage = 50;
-    Color tileColor;
-    AttackCoroutines attack;
-
     public AttackPattern CardAttackType { get; set; }
+
+    public int damage { get; set; }
+
+    AttackCoroutines attack;
+    Color tileColor;
 
     private void Start() {
         attack = gameObject.AddComponent<AttackCoroutines>();
@@ -19,18 +19,55 @@ public class AttackCard : Card {
     public override void DoAction() {
         switch (CardAttackType) {
             case AttackPattern.Column: {
-                    attack.Column();
+                    attack.Column(damage);
                     break;
                 }
 
             case AttackPattern.Row: {
-                    attack.Row(3);
+                    attack.Row(3, damage);
                     break;
                 }
 
             case AttackPattern.Shockwave: {
-                    attack.Shockwave();
+                    attack.Shockwave(damage);
                     break;
+                }
+
+            case AttackPattern.Sword: {
+                    attack.Sword(damage);
+                    break;
+                }
+
+            case AttackPattern.Grenade: {
+                    attack.Grenade(3, damage);
+                    break;
+                }
+        }
+    }
+
+    public override string GetCardTypeAsString() {
+        switch (CardAttackType) {
+            case AttackPattern.Column: {
+                    return "Column";
+                }
+
+            case AttackPattern.Row: {
+                    return "Row";
+                }
+
+            case AttackPattern.Shockwave: {
+                    return "Shockwave";
+                }
+
+            case AttackPattern.Sword: {
+                    return "Sword";
+                }
+
+            case AttackPattern.Grenade: {
+                    return "Grenade";
+                }
+            default: {
+                    return "";
                 }
         }
     }
