@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class TileManager : MonoBehaviour {
 
-    public int width = 6;
-    public int height = 3;
+    int width = 6;
+    int height = 3;
 
     public GameObject tile_prefab;
     GameObject[,] tileArray;
@@ -120,5 +120,13 @@ public class TileManager : MonoBehaviour {
         else {
             return false;
         }
+    }
+
+    public int Width {
+        get { return width; }
+    }
+
+    public int Height {
+        get { return width; }
     }
 }
