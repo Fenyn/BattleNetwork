@@ -6,36 +6,19 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     public TileManager tileManager;
+    public CardManager cardManager;
     public int numOfRowsToLob = 3;
+
+    AttackCoroutines attack;
     int currentX;
     int currentZ;
 
-
-    AttackCoroutines attack;
-
-    public int CurrentX {
-        get {
-            return (int)transform.position.x;
-        }
-
-        protected set { CurrentX = (int)transform.position.x; }
-    }
-
-    public int CurrentZ {
-        get {
-            return (int)transform.position.z;
-        }
-
-        protected set { CurrentZ = (int)transform.position.z; }
     
-    }
 
     // Use this for initialization
     void Start () {
         tileManager = GameObject.Find("Tile Manager").GetComponent<TileManager>();
-        attack = gameObject.AddComponent<AttackCoroutines>();
-        attack.TileManager = tileManager;
-        attack.Player = this;
+        cardManager = GameObject.Find("Card Manager").GetComponent<CardManager>();
 	}
 	
 	// Update is called once per frame
@@ -48,22 +31,18 @@ public class PlayerController : MonoBehaviour {
 
         //column attack pattern bound to Left Ctrl
         //in the future this will be dependent on the active card a player has and not bound to a keyboard key
-        if (Input.GetKeyDown(KeyCode.LeftControl)) {
-            attack.Column();
+        if (Input.GetKeyDown(KeyCode.E)) {
+            cardManager.CycleCardsClockwise();
         }
 
-        //column attack pattern bound to Space
-        //hits a row X spaces away from player where X = numOfRowsToLob
-        //in the future this will be dependent on the active card a player has and not bound to a keyboard key
+        //
+       if (Input.GetKeyDown(KeyCode.Q)) {
+            cardManager.CycleCardsCounterClockwise();
+        }
+
+        //perform attack with spacebar
         if (Input.GetKeyDown(KeyCode.Space)) {
-            attack.Row(numOfRowsToLob);
-        }
-
-        //shockwave attack pattern bound to Left Alt
-        //sends a row attack forward from left side to right side
-        //in the future this will be dependent on the active card a player has and not bound to a keyboard key
-        if (Input.GetKeyDown(KeyCode.LeftAlt)) {
-            attack.Shockwave();
+            cardManager.UseActiveCard();
         }
     }
 
@@ -89,4 +68,22 @@ public class PlayerController : MonoBehaviour {
 
         this.transform.position = new Vector3(startX, 0, startZ);
     }
+
+    public int CurrentX {
+        get {
+            return (int)transform.position.x;
+        }
+
+        protected set { CurrentX = (int)transform.position.x; }
+    }
+
+    public int CurrentZ {
+        get {
+            return (int)transform.position.z;
+        }
+
+        protected set { CurrentZ = (int)transform.position.z; }
+
+    }
 }
+

@@ -8,17 +8,11 @@ public class AttackCoroutines : MonoBehaviour {
     TileManager tileManager;
     PlayerController player;
 
-    public TileManager TileManager {
-        set {
-            tileManager = value;
-        }
+    private void Awake() {
+        tileManager = GameObject.Find("Tile Manager").GetComponent<TileManager>();
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
-    public PlayerController Player {
-       set {
-            player = value;
-        }
-    }
 
     //start a new attack routine with shockwave pattern
     public void Shockwave() {
