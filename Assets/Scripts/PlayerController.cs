@@ -8,12 +8,12 @@ public class PlayerController : MonoBehaviour {
     public TileManager tileManager;
     public CardManager cardManager;
     public int numOfRowsToLob = 3;
+    public float waitTime = .1f;
 
     AttackCoroutines attack;
     int currentX;
     int currentZ;
-
-    
+    bool allowMove = true;
 
     // Use this for initialization
     void Start () {
@@ -23,50 +23,86 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        MovePlayer();
         HandleInputs();
+
+        if(allowMove){
+            StartCoroutine(MovePlayer());
+        } 
+        
 	}
 
     private void HandleInputs() {
 
         //column attack pattern bound to Left Ctrl
         //in the future this will be dependent on the active card a player has and not bound to a keyboard key
-        if (Input.GetKeyDown(KeyCode.E)) {
+        if (Input.GetButtonDown("Clockwise")) {
             cardManager.CycleCardsClockwise();
         }
 
         //
-       if (Input.GetKeyDown(KeyCode.Q)) {
+       if (Input.GetButtonDown("CounterClockwise")) {
             cardManager.CycleCardsCounterClockwise();
         }
 
         //perform attack with spacebar
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetButtonDown("A")) {
             cardManager.UseActiveCard();
         }
     }
 
-    void MovePlayer() {
+    public static float GetAbsMax(float first, float second) {
+        if (Math.Abs(first) > Math.Abs(second)) {
+            return first;
+        }
+
+        else if (Math.Abs(first) < Math.Abs(second)) {
+            return second;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    //refactored to be a coroutine
+    //with no allowMove variable, the player moves across the battlefield at lightning speed
+    //so it was added to slow the player down to a more reasonable pace
+    //which is dictated by waitTime seconds between each movement
+    IEnumerator MovePlayer() {
         float startX = this.transform.position.x;
         float startZ = this.transform.position.z;
+        float upDownInput = GetAbsMax(Input.GetAxisRaw("7"), Input.GetAxisRaw("Vertical"));
+        float leftRightInput = GetAbsMax(Input.GetAxisRaw("6"), Input.GetAxisRaw("Horizontal"));
 
-        if(Input.GetKeyDown(KeyCode.A) && startX > 0) {
+
+        //allowMove is only set to false if movement has occured
+        //otherwise inputs would sometimes be eaten 
+        if (leftRightInput < 0f && startX > 0) {
             startX--;
+            allowMove = false;
         }
 
-        if(Input.GetKeyDown(KeyCode.D) && startX < 2){
+        if (leftRightInput > 0f && startX < 2) {
             startX++;
+            allowMove = false;
         }
 
-        if(Input.GetKeyDown(KeyCode.W) && startZ < 2) {
+        if (upDownInput > 0f && startZ < 2) {
             startZ++;
+            allowMove = false;
         }
-        
-        if(Input.GetKeyDown(KeyCode.S) && startZ > 0) {
+
+        if (upDownInput < 0f && startZ > 0) {
             startZ--;
+            allowMove = false;
         }
 
         this.transform.position = new Vector3(startX, 0, startZ);
+
+        if (!allowMove) {
+            yield return new WaitForSeconds(waitTime);
+        }
+        allowMove = true;
+
     }
 
     public int CurrentX {

@@ -646,6 +646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceAboveHead: 1.3
+  fontSize: 30
   cardManager: {fileID: 0}
 --- !u!1 &735602441
 GameObject:
@@ -1294,6 +1295,11 @@ Prefab:
     - target: {fileID: 4523110647859722, guid: 4d571deb892e53a468d23ec0f3363b5e, type: 2}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114934991574197504, guid: 4d571deb892e53a468d23ec0f3363b5e,
+        type: 2}
+      propertyPath: waitTime
+      value: 0.15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4d571deb892e53a468d23ec0f3363b5e, type: 2}

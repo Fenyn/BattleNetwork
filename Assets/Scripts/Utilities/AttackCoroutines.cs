@@ -14,20 +14,20 @@ public class AttackCoroutines : MonoBehaviour {
         player = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
+    /***********************************************
+     * Methods to instantiate a new attack pattern *
+     ***********************************************/
 
-    //start a new attack routine with shockwave pattern
     public void Shockwave(int dmg) {
         damage = dmg;
         StartCoroutine(Attack_Shockwave());
     }
 
-    //start a new attack routine with column pattern
     public void Column(int dmg) {
         damage = dmg;
         StartCoroutine(Attack_Column());
     }
 
-    //start a new attack routine with row pattern
     public void Row(int numOfRowsToLob, int dmg) {
         damage = dmg;
         StartCoroutine(Attack_Row(numOfRowsToLob));
@@ -43,9 +43,19 @@ public class AttackCoroutines : MonoBehaviour {
         StartCoroutine(Attack_Grenade(numOfRowsToLob));
     }
 
+    public void Boomerang(int dmg) {
+        damage = dmg;
+        StartCoroutine(Attack_Boomerang());
+    }
+
+
+    /*********************************************
+     * Coroutines to perform each attack pattern *
+     *********************************************/ 
+
     IEnumerator Attack_Shockwave() {
         for (int i = 0; i < tileManager.Width; i++) {
-            ArrayList tilesToHit = GetTilesInRow(i); //GetTilesInColumn();
+            ArrayList tilesToHit = GetTilesInRow(i); 
             StartCoroutine(AttackInGrouping(tilesToHit, .20f));
             yield return new WaitForSeconds(.20f);
         }
@@ -59,7 +69,7 @@ public class AttackCoroutines : MonoBehaviour {
     }
 
     IEnumerator Attack_Row(int numOfRowsToLob) {
-        ArrayList tilesToHit = GetTilesInRow(numOfRowsToLob); //GetTilesInColumn();
+        ArrayList tilesToHit = GetTilesInRow(numOfRowsToLob);
         StartCoroutine(AttackInGrouping(tilesToHit));
         yield return "hit";
 
@@ -86,6 +96,34 @@ public class AttackCoroutines : MonoBehaviour {
         StartCoroutine(AttackInGrouping(tilesToHit));
         yield return "hit";
     }
+
+    IEnumerator Attack_Boomerang() {
+        ArrayList tilesToHit = new ArrayList();
+        int currentPlayerX = player.CurrentX;
+        int currentPlayerZ = player.CurrentZ;
+        float movementSpeed = .1f;
+
+        //attack outwards
+        for (int i = currentPlayerX; i < tileManager.Width; i++) {
+            tilesToHit.Add(tileManager.GetTileAtCoords(i, currentPlayerZ));
+            StartCoroutine(AttackInGrouping(tilesToHit, movementSpeed));
+            yield return new WaitForSeconds(movementSpeed);
+            tilesToHit.Clear();
+        }
+
+        //attack inwards
+        for (int i = tileManager.Width; i > 0; i--) {
+            tilesToHit.Add(tileManager.GetTileAtCoords(i, currentPlayerZ));
+            StartCoroutine(AttackInGrouping(tilesToHit, movementSpeed));
+            yield return new WaitForSeconds(movementSpeed);
+            tilesToHit.Clear();
+        }
+    }
+
+    /*********************
+     * Utility Functions *
+     *********************/
+
 
     //changes the colors of the tiles passed in for .5 seconds (or passed in duration)
     //to signify a player's attack then changes back to white

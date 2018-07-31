@@ -5,6 +5,7 @@ using UnityEngine;
 public class AttackCard : Card {
 
     public enum AttackPattern { Row, Column, Shockwave, Grenade, Sword, Boomerang, XSlash, PBAoE}
+
     public AttackPattern CardAttackType { get; set; }
 
     public int damage { get; set; }
@@ -42,6 +43,11 @@ public class AttackCard : Card {
                     attack.Grenade(3, damage);
                     break;
                 }
+
+            case AttackPattern.Boomerang: {
+                    attack.Boomerang(damage);
+                    break;
+                }
         }
     }
 
@@ -66,6 +72,11 @@ public class AttackCard : Card {
             case AttackPattern.Grenade: {
                     return "Grenade";
                 }
+
+            case AttackPattern.Boomerang: {
+                    return "Boomerang";
+                }
+
             default: {
                     return "";
                 }
