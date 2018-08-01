@@ -159,7 +159,7 @@ public class AttackCoroutines : MonoBehaviour {
             if (tile != null) {
                 GameObject tile_occupant = tile.GetComponent<Tile>().CurrentOccupant;
                 if (tile_occupant != null) {
-                    tile_occupant.GetComponent<Enemy>().DealDamage(damage);
+                    tile_occupant.GetComponent<Unit>().DealDamage(damage);
                 }
             }
         }
