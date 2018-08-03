@@ -112,7 +112,7 @@ public class AttackCoroutines : MonoBehaviour {
         }
 
         //attack inwards
-        for (int i = tileManager.Width; i > 0; i--) {
+        for (int i = tileManager.Width; i >= currentPlayerX; i--) {
             tilesToHit.Add(tileManager.GetTileAtCoords(i, currentPlayerZ));
             StartCoroutine(AttackInGrouping(tilesToHit, movementSpeed));
             yield return new WaitForSeconds(movementSpeed);
