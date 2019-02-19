@@ -55,10 +55,22 @@ public class EnemyManager : MonoBehaviour {
 
     }
 
+    public int GetRemainingEnemies()
+    {
+        int numEnemies = 0;
+        foreach (GameObject enemy in enemies) {
+            if (enemy != null) {
+                numEnemies++;
+            }
+        }
+
+        return numEnemies;
+    }
+
     // Update is called once per frame
     void Update () {
         //allows for user to respawn enemies when hitting '=' key
-        if (Input.GetKeyDown(KeyCode.Equals)) {
+        if (Input.GetKeyDown(KeyCode.Equals) && GetRemainingEnemies() <= 0) {
             //Destroy all active enemies
             foreach (GameObject enemy in enemies) {
                 if(enemy != null) {
