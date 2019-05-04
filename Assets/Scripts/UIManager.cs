@@ -35,8 +35,11 @@ public class UIManager : MonoBehaviour {
 
     public void AddObjectWithHP(Unit unit) {
         objectsWithHP.Add(unit);
+
         GameObject text_go = new GameObject(unit.name.ToLower() + "_label");
         text_go.transform.rotation = Camera.main.transform.rotation; // Causes the text to face the camera.
+        text_go.transform.SetParent(unit.transform);
+
         TextMesh tm = text_go.AddComponent<TextMesh>();
         tm.text = unit.CurrentHealth.ToString();
         tm.color = Color.black;
@@ -46,6 +49,7 @@ public class UIManager : MonoBehaviour {
         tm.characterSize = 0.065f;
         tm.fontSize = fontSize;
         signs.Add(text_go);
+
     }
 
     public void RemoveObjectWithHP(Unit unit) {

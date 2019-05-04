@@ -37,8 +37,7 @@ public class CardManager : MonoBehaviour {
         uiManager = GameObject.Find("UI Manager").GetComponent<UIManager>();
     }
 
-    //factory pattern is used here because Unity hates doing a cards[x] = new AttackPattern(Row) sort of thing
-    //so we instead add the card to a gameobject and return the object
+    //we  add the card to a gameobject and return the object
     public static Card MakeNewAttackCard(AttackCard.AttackPattern attackPattern, int damageValue) {
         var thisObj = ManagerObj.AddComponent<AttackCard>();
         thisObj.CardAttackType = attackPattern;

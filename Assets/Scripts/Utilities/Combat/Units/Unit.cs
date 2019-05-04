@@ -25,8 +25,6 @@ public class Unit : MonoBehaviour {
 	}
 
     public void DealDamage(int damage) {
-        Debug.Log("Dealing damage to " + name + ". Starting health: " + CurrentHealth);
         CurrentHealth -= damage;
-        Debug.Log("New health: " + CurrentHealth);
     }
 }
