@@ -86,7 +86,7 @@ public class TileManager : MonoBehaviour {
     //sets the Current Occupant of Tile at coords x,y to be the passed in GameObject
     public bool PutOccupantAtCoords(GameObject occupant, int x, int y) {
         if(occupant == null) {
-            Debug.LogError("Null Occupant attempted to be placed. Please use RemoveOccupantAtCoords instead");
+            Debug.LogError("Null Occupant attempted to be placed.");
         }
 
         //check for valid coords and non-null occupant and then do operation

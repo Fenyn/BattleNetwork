@@ -7,7 +7,6 @@ public class CardManager : MonoBehaviour {
     Card[] cards;
     Card activeCard;
     int currentCardIndex = 0;
-    AttackCoroutines attack;
     UIManager uiManager;
 
 
@@ -41,7 +40,7 @@ public class CardManager : MonoBehaviour {
     public static Card MakeNewAttackCard(AttackCard.AttackPattern attackPattern, int damageValue) {
         var thisObj = ManagerObj.AddComponent<AttackCard>();
         thisObj.CardAttackType = attackPattern;
-        thisObj.damage = damageValue;
+        thisObj.Damage = damageValue;
 
         return thisObj;
     }

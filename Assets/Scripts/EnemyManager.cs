@@ -13,8 +13,11 @@ public class EnemyManager : MonoBehaviour {
     int minEnemyHeight = 0;
     int maxEnemyHeight = 2;
 
+    float timeCounter = 0f;
 
-    GameObject[,] enemies;
+
+    GameObject[,] enemyGameObjects;
+    Enemy[,] enemyDataObjects;
 
     // Use this for initialization
     void Start () {
@@ -26,23 +29,38 @@ public class EnemyManager : MonoBehaviour {
     //if an enemy already exists, spawn new x,y pair and try again
     private void GenerateEnemies() {
         int enemiesSpawned = 0;
-        enemies = new GameObject[6, 3];
+        enemyGameObjects = new GameObject[6, 3];
+        enemyDataObjects = new Enemy[6, 3];
         //TODO: optimize to better handle collisions, could theoretically spend a long time generating if board is full of junk
         while (enemiesSpawned < numberOfEnemiesToSpawn) {
             int x = GetRandomX();
-            int y = GetRandomY();
-            if(enemies[x,y] == null) {
-                enemies[x, y] = Instantiate(enemy_prefab, new Vector3(x, .3f, y), Quaternion.identity);
-                tileManager.PutOccupantAtCoords(enemies[x, y].gameObject, x, y);
+            int z = GetRandomZ();
+            if(enemyGameObjects[x,z] == null) {
+                enemyGameObjects[x, z] = Instantiate(enemy_prefab, new Vector3(x, .3f, z), Quaternion.identity);
+                tileManager.PutOccupantAtCoords(enemyGameObjects[x, z].gameObject, x, z);
+                enemyDataObjects[x, z] = enemyGameObjects[x, z].GetComponent<Enemy>();
+                enemyDataObjects[x, z].refreshXPos();
+                enemyDataObjects[x, z].refreshZPos();
                 enemiesSpawned++;
             }
+
         }
 
         //log position of all new enemies
-        foreach (GameObject enemy in enemies) {
+        foreach (GameObject enemy in enemyGameObjects) {
             if (enemy != null) {
                 Debug.Log("Enemy spawned. Name: " + enemy.name + " Position: " + enemy.transform.position.x + ", " + enemy.transform.position.z);
             }
+        }
+
+        foreach (Enemy enemy in enemyDataObjects) {
+            if(enemy != null) {
+
+            Debug.Log("Enemy at " + enemy.CurrentX + ", " + enemy.CurrentZ);
+            Debug.Log("Current health: " + enemy.CurrentHealth);
+            Debug.Log("Damage per shot: " + enemy.DamagePerShot);
+            }
+
         }
     }
 
@@ -50,7 +68,7 @@ public class EnemyManager : MonoBehaviour {
         return UnityEngine.Random.Range(minEnemyWidth, maxEnemyWidth+1);
     }
 
-    private int GetRandomY() {
+    private int GetRandomZ() {
         return UnityEngine.Random.Range(minEnemyHeight, maxEnemyHeight+1);
 
     }
@@ -58,7 +76,7 @@ public class EnemyManager : MonoBehaviour {
     public int GetRemainingEnemies()
     {
         int numEnemies = 0;
-        foreach (GameObject enemy in enemies) {
+        foreach (GameObject enemy in enemyGameObjects) {
             if (enemy != null) {
                 numEnemies++;
             }
@@ -72,7 +90,7 @@ public class EnemyManager : MonoBehaviour {
         //allows for user to respawn enemies when hitting '=' key
         if (Input.GetKeyDown(KeyCode.Equals) && GetRemainingEnemies() <= 0) {
             //Destroy all active enemies
-            foreach (GameObject enemy in enemies) {
+            foreach (GameObject enemy in enemyGameObjects) {
                 if(enemy != null) {
                     Destroy(enemy);
                 }
@@ -80,6 +98,14 @@ public class EnemyManager : MonoBehaviour {
             
             //generate new enemy grid and populate board
             GenerateEnemies();
+        }
+        timeCounter += Time.deltaTime;
+        if(timeCounter >= 3.0f) {
+            foreach (Enemy enemy in enemyDataObjects) {
+                if (enemy != null) {
+                    //enemy.doAttack();
+                }
+            }
         }
 	}
 }

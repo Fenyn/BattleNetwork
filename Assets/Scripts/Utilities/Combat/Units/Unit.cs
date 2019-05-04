@@ -3,9 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Unit : MonoBehaviour {
-
-    public int maxHealth = 100;
+    [SerializeField]
+    protected int maxHealth = 100;
     public int CurrentHealth { get; protected set; }
+
+    public int CurrentX {
+        get {
+            return (int)transform.position.x;
+        }
+
+        protected set { CurrentX = (int)transform.position.x; }
+    }
+
+    public int CurrentZ {
+        get {
+            return (int)transform.position.z;
+        }
+
+        protected set { CurrentZ = (int)transform.position.z; }
+
+    }
 
     UIManager ui_manager;
 

@@ -8,44 +8,43 @@ public class AttackCard : Card {
 
     public AttackPattern CardAttackType { get; set; }
 
-    public int damage { get; set; }
+    public int Damage { get; set; }
 
-    AttackCoroutines attack;
-    Color tileColor;
+    AttackCoroutines attacks;
 
     private void Start() {
-        attack = gameObject.AddComponent<AttackCoroutines>();
+        attacks = gameObject.AddComponent<AttackCoroutines>();
     }
 
     public override void DoAction() {
         switch (CardAttackType) {
             case AttackPattern.Column: {
-                    attack.Column(damage);
+                    attacks.Column(Damage);
                     break;
                 }
 
             case AttackPattern.Row: {
-                    attack.Row(3, damage);
+                    attacks.Row(3, Damage);
                     break;
                 }
 
             case AttackPattern.Shockwave: {
-                    attack.Shockwave(damage);
+                    attacks.Shockwave(Damage);
                     break;
                 }
 
             case AttackPattern.Sword: {
-                    attack.Sword(damage);
+                    attacks.Sword(Damage);
                     break;
                 }
 
             case AttackPattern.Grenade: {
-                    attack.Grenade(3, damage);
+                    attacks.Grenade(3, Damage);
                     break;
                 }
 
             case AttackPattern.Boomerang: {
-                    attack.Boomerang(damage);
+                    attacks.Boomerang(Damage);
                     break;
                 }
         }

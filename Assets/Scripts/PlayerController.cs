@@ -5,24 +5,24 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-    public TileManager tileManager;
-    public CardManager cardManager;
-    public int numOfRowsToLob = 3;
-    public float waitTime = .1f;
+    public float movementDelay = .1f;
 
-    AttackCoroutines attack;
-    int currentX;
-    int currentZ;
+    private Player player;
+    private TileManager tileManager;
+    private CardManager cardManager;
+
     bool allowMove = true;
 
     // Use this for initialization
     void Start () {
         tileManager = GameObject.Find("Tile Manager").GetComponent<TileManager>();
         cardManager = GameObject.Find("Card Manager").GetComponent<CardManager>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        player = GameObject.Find("Player").GetComponent<Player>();
+
+    }
+
+    // Update is called once per frame
+    void Update () {
         HandleInputs();
 
         if(allowMove){
@@ -33,13 +33,10 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleInputs() {
 
-        //column attack pattern bound to Left Ctrl
-        //in the future this will be dependent on the active card a player has and not bound to a keyboard key
         if (Input.GetButtonDown("Clockwise")) {
             cardManager.CycleCardsClockwise();
         }
 
-        //
        if (Input.GetButtonDown("CounterClockwise")) {
             cardManager.CycleCardsCounterClockwise();
         }
@@ -59,66 +56,49 @@ public class PlayerController : MonoBehaviour {
             return second;
         }
         else {
-            return 0;
+            return first;
         }
     }
 
     //refactored to be a coroutine
-    //with no allowMove variable, the player moves across the battlefield at lightning speed
+    //issue: with no allowMove variable, the player moves across the battlefield at lightning speed
     //so it was added to slow the player down to a more reasonable pace
     //which is dictated by waitTime seconds between each movement
     IEnumerator MovePlayer() {
-        float startX = this.transform.position.x;
-        float startZ = this.transform.position.z;
+        float xCoord = player.CurrentX;
+        float zCoord = player.CurrentZ;
         float upDownInput = GetAbsMax(Input.GetAxisRaw("7"), Input.GetAxisRaw("Vertical"));
         float leftRightInput = GetAbsMax(Input.GetAxisRaw("6"), Input.GetAxisRaw("Horizontal"));
 
 
         //allowMove is only set to false if movement has occured
         //otherwise inputs would sometimes be eaten 
-        if (leftRightInput < 0f && startX > 0) {
-            startX--;
+        if (leftRightInput < 0f && xCoord > 0) {
+            xCoord--;
             allowMove = false;
         }
 
-        if (leftRightInput > 0f && startX < 2) {
-            startX++;
+        if (leftRightInput > 0f && xCoord < 2) {
+            xCoord++;
             allowMove = false;
         }
 
-        if (upDownInput > 0f && startZ < 2) {
-            startZ++;
+        if (upDownInput > 0f && zCoord < 2) {
+            zCoord++;
             allowMove = false;
         }
 
-        if (upDownInput < 0f && startZ > 0) {
-            startZ--;
+        if (upDownInput < 0f && zCoord > 0) {
+            zCoord--;
             allowMove = false;
         }
 
-        this.transform.position = new Vector3(startX, 0, startZ);
+        this.transform.position = new Vector3(xCoord, 0, zCoord);
 
         if (!allowMove) {
-            yield return new WaitForSeconds(waitTime);
+            yield return new WaitForSeconds(movementDelay);
         }
         allowMove = true;
-
-    }
-
-    public int CurrentX {
-        get {
-            return (int)transform.position.x;
-        }
-
-        protected set { CurrentX = (int)transform.position.x; }
-    }
-
-    public int CurrentZ {
-        get {
-            return (int)transform.position.z;
-        }
-
-        protected set { CurrentZ = (int)transform.position.z; }
 
     }
 }

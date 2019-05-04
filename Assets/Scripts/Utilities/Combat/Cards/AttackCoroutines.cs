@@ -6,12 +6,12 @@ using UnityEngine;
 public class AttackCoroutines : MonoBehaviour {
 
     TileManager tileManager;
-    PlayerController player;
+    Player player;
     int damage;
 
     private void Awake() {
         tileManager = GameObject.Find("Tile Manager").GetComponent<TileManager>();
-        player = GameObject.Find("Player").GetComponent<PlayerController>();
+        player = GameObject.Find("Player").GetComponent<Player>();
     }
 
     /***********************************************
@@ -137,7 +137,7 @@ public class AttackCoroutines : MonoBehaviour {
 
     //changes colors of tiles in array based on whether the "attack" parameter is passed in or not
     //TODO: find a non-String way to do this
-    private void ChangeTileColors(ArrayList tilesToHit, String type) {
+    private void ChangeTileColors(ArrayList tilesToHit, string type) {
         Color color;
         if (type.Equals("attack")) {
             color = Color.red;
