@@ -37,10 +37,9 @@ public class EnemyManager : MonoBehaviour {
             int z = GetRandomZ();
             if(enemyGameObjects[x,z] == null) {
                 enemyGameObjects[x, z] = Instantiate(enemy_prefab, new Vector3(x, .3f, z), Quaternion.identity);
+                enemyDataObjects[x, z] = enemyGameObjects[x,z].gameObject.AddComponent<BasicShooter>();
+                enemyDataObjects[x, z].Initialize();
                 tileManager.PutOccupantAtCoords(enemyGameObjects[x, z].gameObject, x, z);
-                enemyDataObjects[x, z] = enemyGameObjects[x, z].GetComponent<Enemy>();
-                enemyDataObjects[x, z].refreshXPos();
-                enemyDataObjects[x, z].refreshZPos();
                 enemiesSpawned++;
             }
 
@@ -103,9 +102,11 @@ public class EnemyManager : MonoBehaviour {
         if(timeCounter >= 3.0f) {
             foreach (Enemy enemy in enemyDataObjects) {
                 if (enemy != null) {
-                    //enemy.doAttack();
+                    enemy.DoAttack();
+                    Debug.Log("SHOOTING!");
                 }
             }
+            timeCounter = 0.0f;
         }
 	}
 }

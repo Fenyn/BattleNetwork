@@ -10,19 +10,15 @@ public class Enemy : Unit {
         tileManager = GameObject.Find("Tile Manager").GetComponent<TileManager>();
     }
 
-    protected int damagePerShot;
+    void Start() { }
+
     public int DamagePerShot { get; set; }
 
     virtual public void DoAttack() { }
     virtual protected void Move() { }
+    virtual public void Initialize() { }
 
-    public void refreshXPos () {
-        CurrentX = CurrentX;
-    }
-
-    public void refreshZPos () {
-        CurrentZ = CurrentZ;
-    }
+    public Enemy() { }
 
     /*********************
      * Utility Functions *
@@ -31,7 +27,7 @@ public class Enemy : Unit {
 
     //changes the colors of the tiles passed in for .5 seconds (or passed in duration)
     //to signify a player's attack then changes back to white
-    protected IEnumerator AttackInGrouping(ArrayList tilesToHit, float waitDelay = .5f) {
+    protected IEnumerator AttackInGrouping(ArrayList tilesToHit, float waitDelay = 0.5f) {
         ChangeTileColors(tilesToHit, "attack");
         DamageOccupants(tilesToHit);
         yield return new WaitForSeconds(waitDelay);
@@ -62,8 +58,8 @@ public class Enemy : Unit {
         foreach (GameObject tile in tilesToHit) {
             if (tile != null) {
                 GameObject tile_occupant = tile.GetComponent<Tile>().CurrentOccupant;
-                if (tile_occupant != null) {
-                    tile_occupant.GetComponent<Unit>().DealDamage(damagePerShot);
+                if (tile_occupant != null && tile_occupant.GetComponent<Player>() != null) {
+                    tile_occupant.GetComponent<Unit>().DealDamage(DamagePerShot);
                 }
             }
         }

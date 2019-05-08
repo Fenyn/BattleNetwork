@@ -1125,7 +1125,7 @@ Prefab:
         type: 2}
       propertyPath: enemy_prefab
       value: 
-      objectReference: {fileID: 1303431815193512, guid: fb2b55583dff2e84a81111e280bf8858,
+      objectReference: {fileID: 1303431815193512, guid: b8a0df49d5517f740aa20d0df2585ce7,
         type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e51a8f0b46aad90438d5d8c08658b02f, type: 2}

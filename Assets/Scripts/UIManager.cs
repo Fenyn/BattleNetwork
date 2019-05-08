@@ -30,11 +30,12 @@ public class UIManager : MonoBehaviour {
 	}
 
     public void UpdateCurrentCard() {
-        signs[0].GetComponent<TextMesh>().text = cardManager.GetCurrentCardNameAsString();
+        //signs[0].GetComponent<TextMesh>().text = cardManager.GetCurrentCardNameAsString();
     }
 
     public void AddObjectWithHP(Unit unit) {
         objectsWithHP.Add(unit);
+        Debug.Log("Added unit: " + unit);
 
         GameObject text_go = new GameObject(unit.name.ToLower() + "_label");
         text_go.transform.rotation = Camera.main.transform.rotation; // Causes the text to face the camera.

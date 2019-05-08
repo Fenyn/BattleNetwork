@@ -6,7 +6,7 @@ public class CardManager : MonoBehaviour {
 
     Card[] cards;
     Card activeCard;
-    int currentCardIndex = 0;
+    public int currentCardIndex = 0;
     UIManager uiManager;
 
 
@@ -22,12 +22,12 @@ public class CardManager : MonoBehaviour {
 
     private void Awake() {
         cards = new Card[6];
-        cards[0] = MakeNewAttackCard(AttackCard.AttackPattern.Column, 50);
-        cards[1] = MakeNewAttackCard(AttackCard.AttackPattern.Row, 50);
+        cards[0] = MakeNewAttackCard(AttackCard.AttackPattern.Column, 20);
+        cards[1] = MakeNewAttackCard(AttackCard.AttackPattern.Row, 30);
         cards[2] = MakeNewAttackCard(AttackCard.AttackPattern.Shockwave, 35);
         cards[3] = MakeNewAttackCard(AttackCard.AttackPattern.Sword, 100);
-        cards[4] = MakeNewAttackCard(AttackCard.AttackPattern.Grenade, 100);
-        cards[5] = MakeNewAttackCard(AttackCard.AttackPattern.Boomerang, 50);
+        cards[4] = MakeNewAttackCard(AttackCard.AttackPattern.Grenade, 10);
+        cards[5] = MakeNewAttackCard(AttackCard.AttackPattern.Boomerang, 10);
         activeCard = cards[currentCardIndex];
     }
 
