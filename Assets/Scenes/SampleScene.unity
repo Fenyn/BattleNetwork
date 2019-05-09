@@ -1115,7 +1115,7 @@ Prefab:
     - target: {fileID: 114217677553907370, guid: e51a8f0b46aad90438d5d8c08658b02f,
         type: 2}
       propertyPath: numberOfEnemiesToSpawn
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1607137703274926, guid: e51a8f0b46aad90438d5d8c08658b02f, type: 2}
       propertyPath: m_Name
