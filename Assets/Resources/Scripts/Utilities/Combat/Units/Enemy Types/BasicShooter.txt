@@ -1,18 +1,19 @@
 tree("Root")
-	sequence
-		tree "MoveToPlayerRow"
+	fallback
 		tree "Attack"
+		tree "MoveToPlayerRow"
 
 tree("MoveToPlayerRow")
 	while not IsInPlayerRow 
 		sequence
-			TargetPlayerRow
-			CheckIfNextMovePossible
+			CheckIfAbleToAttack
 			MoveTowardsTargetRow
-			Wait 0.5
+			Wait 1.5
+
 
 tree("Attack")
 	while IsInPlayerRow
 		sequence
+			CheckIfAbleToAttack
 			DoAttack
-			Wait 1.0
+			Wait 1.3
