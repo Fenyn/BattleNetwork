@@ -1,0 +1,18 @@
+tree("Root")
+	sequence
+		tree "MoveToPlayerRow"
+		tree "Attack"
+
+tree("MoveToPlayerRow")
+	while not IsInPlayerRow 
+		sequence
+			TargetPlayerRow
+			CheckIfNextMovePossible
+			MoveTowardsTargetRow
+			Wait 0.5
+
+tree("Attack")
+	while IsInPlayerRow
+		sequence
+			DoAttack
+			Wait 1.0

@@ -1171,7 +1171,17 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1303431815193512, guid: b8a0df49d5517f740aa20d0df2585ce7, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114331374232065330, guid: b8a0df49d5517f740aa20d0df2585ce7,
+        type: 2}
+      propertyPath: scripts.Array.data[0]
+      value: 
+      objectReference: {fileID: 4900000, guid: f1010b160a91ca64ab4f2e5482862ba8, type: 3}
+    - target: {fileID: 114331374232065330, guid: b8a0df49d5517f740aa20d0df2585ce7,
+        type: 2}
+      propertyPath: sourceInfos.Array.data[0].isFoldout
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b8a0df49d5517f740aa20d0df2585ce7, type: 2}

@@ -102,8 +102,8 @@ public class EnemyManager : MonoBehaviour {
         if(timeCounter >= 3.0f) {
             foreach (Enemy enemy in enemyDataObjects) {
                 if (enemy != null) {
-                    enemy.DoAttack();
-                    Debug.Log("SHOOTING!");
+                    //enemy.DoAttack();
+                    //Debug.Log("SHOOTING!");
                 }
             }
             timeCounter = 0.0f;
