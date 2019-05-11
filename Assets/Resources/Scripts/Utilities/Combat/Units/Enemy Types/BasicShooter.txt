@@ -9,6 +9,7 @@ tree("MoveToPlayerRow")
 			CheckIfAbleToAttack
 			MoveTowardsTargetRow
 			Wait 1.5
+			CheckIfAbleToAttack
 
 
 tree("Attack")
@@ -17,3 +18,4 @@ tree("Attack")
 			CheckIfAbleToAttack
 			DoAttack
 			Wait 1.3
+			CheckIfAbleToAttack

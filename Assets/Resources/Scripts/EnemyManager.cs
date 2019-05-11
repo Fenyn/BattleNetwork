@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour {
 
     public int numberOfEnemiesToSpawn = 1;
-    public GameObject enemy_prefab;
+    public GameObject[] enemy_prefabs;
     TileManager tileManager;
     int minEnemyWidth = 3;
     int maxEnemyWidth = 5;
@@ -35,9 +35,11 @@ public class EnemyManager : MonoBehaviour {
         while (enemiesSpawned < numberOfEnemiesToSpawn) {
             int x = GetRandomX();
             int z = GetRandomZ();
-            if(enemyGameObjects[x,z] == null) {
-                enemyGameObjects[x, z] = Instantiate(enemy_prefab, new Vector3(x, .3f, z), Quaternion.identity);
-                enemyDataObjects[x, z] = enemyGameObjects[x,z].gameObject.AddComponent<BasicShooter>();
+            int r = UnityEngine.Random.Range(0, enemy_prefabs.Length);
+            Debug.Log("Got random int: " + r);
+            if (enemyGameObjects[x,z] == null) {
+                enemyGameObjects[x, z] = Instantiate(enemy_prefabs[r], new Vector3(x, .3f, z), Quaternion.identity);
+                enemyDataObjects[x, z] = enemyGameObjects[x,z].gameObject.GetComponent<Enemy>();
                 enemyDataObjects[x, z].Initialize();
                 tileManager.PutOccupantAtCoords(enemyGameObjects[x, z].gameObject, x, z);
                 enemiesSpawned++;

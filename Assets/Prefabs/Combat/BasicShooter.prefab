@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 33629162949421756}
   - component: {fileID: 23750793647345186}
   - component: {fileID: 65737339358801042}
-  - component: {fileID: 114738306596234494}
+  - component: {fileID: 114798959093126614}
   m_Layer: 0
-  m_Name: Basic_Shooter
+  m_Name: BasicShooter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,7 +97,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114738306596234494
+--- !u!114 &114798959093126614
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -108,4 +108,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76efa9dfa5df03468977ce9da375a4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 130
+  maxHealth: 0
+  IsInPlayerRow: 0

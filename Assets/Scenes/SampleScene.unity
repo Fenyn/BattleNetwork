@@ -1080,6 +1080,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114217677553907370, guid: e51a8f0b46aad90438d5d8c08658b02f,
+        type: 2}
+      propertyPath: enemy_prefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4986498037967026, guid: e51a8f0b46aad90438d5d8c08658b02f, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1115,7 +1120,7 @@ Prefab:
     - target: {fileID: 114217677553907370, guid: e51a8f0b46aad90438d5d8c08658b02f,
         type: 2}
       propertyPath: numberOfEnemiesToSpawn
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1607137703274926, guid: e51a8f0b46aad90438d5d8c08658b02f, type: 2}
       propertyPath: m_Name
@@ -1127,6 +1132,18 @@ Prefab:
       value: 
       objectReference: {fileID: 1303431815193512, guid: b8a0df49d5517f740aa20d0df2585ce7,
         type: 2}
+    - target: {fileID: 114217677553907370, guid: e51a8f0b46aad90438d5d8c08658b02f,
+        type: 2}
+      propertyPath: enemy_prefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 1303431815193512, guid: 9862beb4493e12346bcbb29ca4771700,
+        type: 2}
+    - target: {fileID: 114217677553907370, guid: e51a8f0b46aad90438d5d8c08658b02f,
+        type: 2}
+      propertyPath: enemy_prefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 1466720519956744, guid: 284b5ec58fb25d8448521e55652ca1d6,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e51a8f0b46aad90438d5d8c08658b02f, type: 2}
   m_IsPrefabParent: 0
@@ -1137,6 +1154,14 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: scripts.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sourceInfos.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4245771349859070, guid: b8a0df49d5517f740aa20d0df2585ce7, type: 2}
       propertyPath: m_LocalPosition.x
       value: 4
@@ -1171,16 +1196,18 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1303431815193512, guid: b8a0df49d5517f740aa20d0df2585ce7, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114331374232065330, guid: b8a0df49d5517f740aa20d0df2585ce7,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: scripts.Array.data[0]
       value: 
       objectReference: {fileID: 4900000, guid: f1010b160a91ca64ab4f2e5482862ba8, type: 3}
-    - target: {fileID: 114331374232065330, guid: b8a0df49d5517f740aa20d0df2585ce7,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: sourceInfos.Array.data[0].isFoldout
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sourceInfos.Array.data[1].isFoldout
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1283,6 +1310,10 @@ Prefab:
     - target: {fileID: 4523110647859722, guid: 4d571deb892e53a468d23ec0f3363b5e, type: 2}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1453284682273590, guid: 4d571deb892e53a468d23ec0f3363b5e, type: 2}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4d571deb892e53a468d23ec0f3363b5e, type: 2}
@@ -2177,6 +2208,32 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1893849545}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1988851526 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1303431815193512, guid: b8a0df49d5517f740aa20d0df2585ce7,
+    type: 2}
+  m_PrefabInternal: {fileID: 1093912922}
+--- !u!114 &1988851527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1988851526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17e43e7170fb45b4b81dcd16d0ff55d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scripts:
+  - {fileID: 0}
+  autoReset: 1
+  tickOn: 0
+  sourceInfos:
+  - isFoldout: 1
+    breakPoints: 
+    breakPointStatuses: 
+    collapsedLines: 
+    btScript: 
 --- !u!1001 &2115325216
 Prefab:
   m_ObjectHideFlags: 0

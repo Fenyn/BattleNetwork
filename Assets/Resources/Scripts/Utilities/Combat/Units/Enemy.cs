@@ -35,12 +35,19 @@ public class Enemy : Unit {
         yield return "hit";
     }
 
+    protected IEnumerator DamageTiles(ArrayList tilesToDamage) {
+        DamageOccupants(tilesToDamage);
+        yield return "hit";
+    }
+
     //changes colors of tiles in array based on whether the "attack" parameter is passed in or not
     //TODO: find a non-String way to do this
-    private void ChangeTileColors(ArrayList tilesToHit, string type) {
+    protected void ChangeTileColors(ArrayList tilesToHit, string type) {
         Color color;
         if (type.Equals("attack")) {
             color = Color.red;
+        } else if (type.Equals("scan")) {
+            color = Color.yellow;
         }
         else {
             color = Color.white;
@@ -87,6 +94,11 @@ public class Enemy : Unit {
         tilesToHit.Add(tileManager.GetTileAtCoords(currentX - numSpacesFromUnitToRow, currentZ + 1));
 
         return tilesToHit;
+    }
+
+    protected int FindPlayerRow() {
+        GameObject player = GameObject.Find("Player");
+        return player.GetComponent<Player>().CurrentZ;
     }
 
 }

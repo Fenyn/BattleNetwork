@@ -56,11 +56,6 @@ public class BasicShooter : Enemy {
         }
     }
 
-    int FindPlayerRow() {
-        GameObject player = GameObject.Find("Player");
-        return player.GetComponent<Player>().CurrentZ;
-    }
-
     void TargetPlayerRow() {
         targetRow = FindPlayerRow();
     }

@@ -1,0 +1,18 @@
+tree("Root")
+	sequence
+		tree "ScanForPlayer"
+		tree "Attack"
+
+
+tree("ScanForPlayer")
+	while not PlayerInRange 
+		sequence
+			Wait 3.0
+			CheckIfAbleToAttack
+			
+
+
+tree("Attack")
+	sequence
+		DoAttack
+		Wait 1.3
